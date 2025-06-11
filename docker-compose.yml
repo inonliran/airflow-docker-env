@@ -6,13 +6,14 @@ services:
       - AIRFLOW__CORE__LOAD_EXAMPLES=True
       - AIRFLOW__CORE__DAGS_FOLDER=/opt/airflow/mydags
       - AIRFLOW__CORE__BASE_LOG_FOLDER=/opt/airflow/mylogs
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/db/airflow.db
     command: webserver
     ports:
       - 8080:8080
     volumes:
       - ./dags:/opt/airflow/mydags
       - ./logs:/opt/airflow/mylogs
-      - ./db:/opt/airflow
+      - ./db:/opt/airflow/db
 
   scheduler:
     image: apache/airflow:2.7.1
@@ -22,8 +23,9 @@ services:
       - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
       - AIRFLOW__CORE__DAGS_FOLDER=/opt/airflow/mydags
       - AIRFLOW__CORE__BASE_LOG_FOLDER=/opt/airflow/mylogs
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/db/airflow.db
     command: scheduler
     volumes:
       - ./dags:/opt/airflow/mydags
       - ./logs:/opt/airflow/mylogs
-      - ./db:/opt/airflow
+      - ./db:/opt/airflow/db
