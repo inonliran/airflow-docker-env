@@ -3,18 +3,27 @@ version: '3.8'
 services:
   airflow:
     image: apache/airflow:2.7.1
-    ports:
-      - 8080:8080
     environment:
       - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
       - AIRFLOW__CORE__LOAD_EXAMPLES=True
+      - AIRFLOW__CORE__DAGS_FOLDER=/opt/airflow/mydags
+      - AIRFLOW__CORE__BASE_LOG_FOLDER=/opt/airflow/mylogs
     command: webserver
+    ports:
+      - 8080:8080
     volumes:
-      - ./dags:/opt/airflow/dags
-      - ./logs:/opt/airflow/logs
+      - ./dags:/opt/airflow/mydags
+      - ./logs:/opt/airflow/mylogs
 
   scheduler:
     image: apache/airflow:2.7.1
     depends_on:
       - airflow
     command: scheduler
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
+      - AIRFLOW__CORE__DAGS_FOLDER=/opt/airflow/mydags
+      - AIRFLOW__CORE__BASE_LOG_FOLDER=/opt/airflow/mylogs
+    volumes:
+      - ./dags:/opt/airflow/mydags
+      - ./logs:/opt/airflow/mylogs
