@@ -1,0 +1,8 @@
+{
+  "name": "Airflow Dev",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "docker-in-docker": "latest"
+  },
+  "postCreateCommand": "docker-compose up -d"
+}
