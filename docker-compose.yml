@@ -14,6 +14,7 @@ services:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ./db:/opt/airflow/db
+    working_dir: /opt/airflow
 
   scheduler:
     image: apache/airflow:2.7.1
@@ -29,3 +30,4 @@ services:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ./db:/opt/airflow/db
+    working_dir: /opt/airflow
